@@ -54,4 +54,5 @@ offset, as denoted by the suffix "Z".
 **Example**  
 ```js
 var toISOString = require('to-iso-string-x');
+toISOString(new Date(0)); // '1970-01-01T00:00:00.000Z'
 ```
