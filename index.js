@@ -1,6 +1,6 @@
 /**
  * @file Cross-browser toISOString support.
- * @version 1.1.0
+ * @version 1.2.0
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -11,7 +11,7 @@
 
 var isDate = require('is-date-object');
 var padStart = require('string.prototype.padstart');
-var forEach = require('for-each');
+var map = require('array-map-x');
 
 var $toISOString = function toISOString(date) {
   if (isDate(date) === false) {
@@ -30,7 +30,7 @@ var $toISOString = function toISOString(date) {
   month = ((month % 12) + 12) % 12;
 
   // the date time string format is specified in 15.9.1.15.
-  var result = [
+  var parts = [
     month + 1,
     date.getUTCDate(),
     date.getUTCHours(),
@@ -48,17 +48,17 @@ var $toISOString = function toISOString(date) {
   }
 
   year = sign + padStart(Math.abs(year), sign ? 6 : 4, '0');
-  forEach(result, function _for(item, index) {
+  var result = map(parts, function _for(item) {
     // pad months, days, hours, minutes, and seconds to have two digits.
-    result[index] = padStart(item, 2, '0');
+    return padStart(item, 2, '0');
   });
 
   var dateStr = year + '-' + result.slice(0, 2).join('-');
   // pad milliseconds to have three digits.
   var msStr = padStart(date.getUTCMilliseconds(date), 3, '0');
-  var timeStr = result.slice(2).join(':') + '.' + msStr + 'Z';
+  var timeStr = result.slice(2).join(':') + '.' + msStr;
 
-  return dateStr + 'T' + timeStr;
+  return dateStr + 'T' + timeStr + 'Z';
 };
 
 /**
