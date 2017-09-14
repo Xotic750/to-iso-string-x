@@ -1,6 +1,6 @@
 /**
  * @file Cross-browser toISOString support.
- * @version 1.4.0
+ * @version 1.5.0
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -9,21 +9,35 @@
 
 'use strict';
 
-var nativeToISOString = Date.prototype.toISOString;
+var nativeToISOString = typeof Date.prototype.toISOString === 'function' && Date.prototype.toISOString;
 
-var $toISOString;
-try {
-  if (nativeToISOString.call(new Date(0)) !== '1970-01-01T00:00:00.000Z') {
-    throw new Error('failed epoch');
+var isWorking;
+if (nativeToISOString) {
+  var attempt = require('attempt-x');
+  var res = attempt.call(new Date(0), nativeToISOString);
+  isWorking = res.threw === false && res.value === '1970-01-01T00:00:00.000Z';
+  if (isWorking) {
+    res = attempt.call(new Date(-62198755200000), nativeToISOString);
+    isWorking = res.threw === false && res.value.indexOf('-000001') > -1;
   }
 
+  if (isWorking) {
+    res = attempt.call(new Date(-1), nativeToISOString);
+    isWorking = res.threw === false && res.value === '1969-12-31T23:59:59.999Z';
+  }
+}
+
+var $toISOString;
+if (isWorking) {
   $toISOString = function toISOString(date) {
     return nativeToISOString.call(date);
   };
-} catch (ignore) {
+} else {
   var isDate = require('is-date-object');
-  var padStart = require('string.prototype.padstart');
+  var padStart = require('string-pad-start-x');
   var map = require('array-map-x');
+  var arraySlice = require('array-slice-x');
+  var join = Array.prototype.join;
 
   $toISOString = function toISOString(date) {
     if (isDate(date) === false) {
@@ -38,7 +52,7 @@ try {
     var year = date.getUTCFullYear();
     var month = date.getUTCMonth();
     // see https://github.com/es-shims/es5-shim/issues/111
-    year += Math.floor(month / 12);
+    year += (month / 12) >> 0; // floor
     month = ((month % 12) + 12) % 12;
 
     // the date time string format is specified in 15.9.1.15.
@@ -65,10 +79,10 @@ try {
       return padStart(item, 2, '0');
     });
 
-    var dateStr = year + '-' + result.slice(0, 2).join('-');
+    var dateStr = year + '-' + join.call(arraySlice(result, 0, 2), '-');
     // pad milliseconds to have three digits.
     var msStr = padStart(date.getUTCMilliseconds(date), 3, '0');
-    var timeStr = result.slice(2).join(':') + '.' + msStr;
+    var timeStr = join.call(arraySlice(result, 2), ':') + '.' + msStr;
 
     return dateStr + 'T' + timeStr + 'Z';
   };
