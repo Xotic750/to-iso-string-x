@@ -51,7 +51,7 @@
   "dependencies": {
     "array-map-x": "^2.3.0",
     "array-slice-x": "^3.5.0",
-    "attempt-x": "^2.0.2",
+    "attempt-x": "^2.0.3",
     "is-date-object": "^1.0.1",
     "string-pad-start-x": "^1.2.0"
   },
