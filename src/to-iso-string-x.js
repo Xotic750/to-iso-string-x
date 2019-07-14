@@ -7,15 +7,15 @@
  * @module to-iso-string-x
  */
 
-'use strict';
+const nativeToISOString = typeof Date.prototype.toISOString === 'function' && Date.prototype.toISOString;
 
-var nativeToISOString = typeof Date.prototype.toISOString === 'function' && Date.prototype.toISOString;
+let isWorking;
 
-var isWorking;
 if (nativeToISOString) {
-  var attempt = require('attempt-x');
-  var res = attempt.call(new Date(0), nativeToISOString);
+  const attempt = require('attempt-x');
+  let res = attempt.call(new Date(0), nativeToISOString);
   isWorking = res.threw === false && res.value === '1970-01-01T00:00:00.000Z';
+
   if (isWorking) {
     res = attempt.call(new Date(-62198755200000), nativeToISOString);
     isWorking = res.threw === false && res.value.indexOf('-000001') > -1;
@@ -27,17 +27,18 @@ if (nativeToISOString) {
   }
 }
 
-var $toISOString;
+let $toISOString;
+
 if (isWorking) {
   $toISOString = function toISOString(date) {
     return nativeToISOString.call(date);
   };
 } else {
-  var isDate = require('is-date-object');
-  var padStart = require('string-pad-start-x');
-  var map = require('array-map-x');
-  var arraySlice = require('array-slice-x');
-  var join = Array.prototype.join;
+  const isDate = require('is-date-object');
+  const padStart = require('string-pad-start-x');
+  const map = require('array-map-x');
+  const arraySlice = require('array-slice-x');
+  const {join} = Array.prototype;
 
   $toISOString = function toISOString(date) {
     if (isDate(date) === false) {
@@ -49,22 +50,17 @@ if (isWorking) {
       throw new RangeError('toISOString called on non-finite value.');
     }
 
-    var year = date.getUTCFullYear();
-    var month = date.getUTCMonth();
+    let year = date.getUTCFullYear();
+    let month = date.getUTCMonth();
     // see https://github.com/es-shims/es5-shim/issues/111
     year += (month / 12) >> 0; // floor
     month = ((month % 12) + 12) % 12;
 
     // the date time string format is specified in 15.9.1.15.
-    var parts = [
-      month + 1,
-      date.getUTCDate(),
-      date.getUTCHours(),
-      date.getUTCMinutes(),
-      date.getUTCSeconds()
-    ];
+    const parts = [month + 1, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()];
 
-    var sign;
+    let sign;
+
     if (year < 0) {
       sign = '-';
     } else if (year > 9999) {
@@ -74,17 +70,17 @@ if (isWorking) {
     }
 
     year = sign + padStart(Math.abs(year), sign ? 6 : 4, '0');
-    var result = map(parts, function _mapper(item) {
+    const result = map(parts, function _mapper(item) {
       // pad months, days, hours, minutes, and seconds to have two digits.
       return padStart(item, 2, '0');
     });
 
-    var dateStr = year + '-' + join.call(arraySlice(result, 0, 2), '-');
+    const dateStr = `${year}-${join.call(arraySlice(result, 0, 2), '-')}`;
     // pad milliseconds to have three digits.
-    var msStr = padStart(date.getUTCMilliseconds(date), 3, '0');
-    var timeStr = join.call(arraySlice(result, 2), ':') + '.' + msStr;
+    const msStr = padStart(date.getUTCMilliseconds(date), 3, '0');
+    const timeStr = `${join.call(arraySlice(result, 2), ':')}.${msStr}`;
 
-    return dateStr + 'T' + timeStr + 'Z';
+    return `${dateStr}T${timeStr}Z`;
   };
 }
 
@@ -94,11 +90,11 @@ if (isWorking) {
  * ±YYYYYY-MM-DDTHH:mm:ss.sssZ, respectively). The timezone is always zero UTC
  * offset, as denoted by the suffix "Z".
  *
- * @param {Object} date A Date object.
+ * @param {object} date - A Date object.
  * @throws {TypeError} If date is not a Date object.
  * @throws {RangeError} If date is invalid.
- * @return {string} Given date in the ISO 8601 format according to universal time.
-
+ * @returns {string} Given date in the ISO 8601 format according to universal time.
+ 
  * @example
  * var toISOString = require('to-iso-string-x');
  * toISOString(new Date(0)); // '1970-01-01T00:00:00.000Z'
