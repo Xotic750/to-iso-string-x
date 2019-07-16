@@ -116,44 +116,47 @@ describe('toISOString', function() {
   });
 
   it('should throw TypeError if not supplied a date object', function() {
+    expect.assertions(1);
     expect(function() {
       toISOString();
-    }).toThrow();
+    }).toThrowErrorMatchingSnapshot();
 
     expect(function() {
       toISOString(undefined);
-    }).toThrow();
+    }).toThrowErrorMatchingSnapshot();
 
     expect(function() {
       toISOString(null);
-    }).toThrow();
+    }).toThrowErrorMatchingSnapshot();
 
     expect(function() {
       toISOString(1);
-    }).toThrow();
+    }).toThrowErrorMatchingSnapshot();
 
     expect(function() {
       toISOString(true);
-    }).toThrow();
+    }).toThrowErrorMatchingSnapshot();
 
     expect(function() {
       toISOString({});
-    }).toThrow();
+    }).toThrowErrorMatchingSnapshot();
   });
 
   it('should throw RangeError date object is invalid', function() {
+    expect.assertions(1);
     expect(function() {
       toISOString(new Date(NaN));
-    }).toThrow();
+    }).toThrowErrorMatchingSnapshot();
   });
 
   it('should support extended years', function() {
+    expect.assertions(1);
     expect(toISOString(new Date(-62198755200000)).indexOf('-000001-01-01')).toBe(0);
     expect(toISOString(new Date(8.64e15)).indexOf('+275760-09-13')).toBe(0);
   });
 
   it('should return correct dates', function() {
-    // Safari 5.1.5 "1969-12-31T23:59:59.-01Z"
+    expect.assertions(1); // Safari 5.1.5 "1969-12-31T23:59:59.-01Z"
     expect(toISOString(new Date(-1))).toBe('1969-12-31T23:59:59.999Z');
 
     negativeDate.forEach(function(item, index) {
