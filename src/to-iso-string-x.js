@@ -1,12 +1,3 @@
-/**
- * @file Cross-browser toISOString support.
- * @version 1.5.0
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module to-iso-string-x
- */
-
 const nativeToISOString = typeof Date.prototype.toISOString === 'function' && Date.prototype.toISOString;
 
 let isWorking;
@@ -95,8 +86,5 @@ if (isWorking) {
  * @throws {RangeError} If date is invalid.
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  
- * @example
- * var toISOString = require('to-iso-string-x');
- * toISOString(new Date(0)); // '1970-01-01T00:00:00.000Z'
  */
 export default $toISOString;
