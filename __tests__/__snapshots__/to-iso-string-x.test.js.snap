@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`toISOString should throw RangeError date object is invalid 1`] = `"Invalid time value"`;
+
+exports[`toISOString should throw TypeError if not supplied a date object 1`] = `"Method Date.prototype.toISOString called on incompatible receiver undefined"`;
+
+exports[`toISOString should throw TypeError if not supplied a date object 2`] = `"Method Date.prototype.toISOString called on incompatible receiver undefined"`;
+
+exports[`toISOString should throw TypeError if not supplied a date object 3`] = `"Method Date.prototype.toISOString called on incompatible receiver null"`;
+
+exports[`toISOString should throw TypeError if not supplied a date object 4`] = `"Method Date.prototype.toISOString called on incompatible receiver 1"`;
+
+exports[`toISOString should throw TypeError if not supplied a date object 5`] = `"Method Date.prototype.toISOString called on incompatible receiver true"`;
+
+exports[`toISOString should throw TypeError if not supplied a date object 6`] = `"Method Date.prototype.toISOString called on incompatible receiver #<Object>"`;

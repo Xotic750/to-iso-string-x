@@ -1,4 +1,4 @@
-let toISOString;
+import toISOString from '../src/to-iso-string-x';
 
 describe('toISOString', function() {
   let negativeDate;
@@ -93,7 +93,7 @@ describe('toISOString', function() {
   });
 
   it('should throw TypeError if not supplied a date object', function() {
-    expect.assertions(1);
+    expect.assertions(6);
     expect(function() {
       toISOString();
     }).toThrowErrorMatchingSnapshot();
@@ -127,13 +127,13 @@ describe('toISOString', function() {
   });
 
   it('should support extended years', function() {
-    expect.assertions(1);
+    expect.assertions(2);
     expect(toISOString(new Date(-62198755200000)).indexOf('-000001-01-01')).toBe(0);
     expect(toISOString(new Date(8.64e15)).indexOf('+275760-09-13')).toBe(0);
   });
 
   it('should return correct dates', function() {
-    expect.assertions(1); // Safari 5.1.5 "1969-12-31T23:59:59.-01Z"
+    expect.assertions(25); // Safari 5.1.5 "1969-12-31T23:59:59.-01Z"
     expect(toISOString(new Date(-1))).toBe('1969-12-31T23:59:59.999Z');
 
     negativeDate.forEach(function(item, index) {

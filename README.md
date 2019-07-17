@@ -21,15 +21,13 @@
 <a name="module_to-iso-string-x"></a>
 
 ## to-iso-string-x
+
 Cross-browser toISOString support.
 
-**Version**: 1.5.0  
-**Author**: Xotic750 <Xotic750@gmail.com>  
-**License**: [MIT](&lt;https://opensource.org/licenses/MIT&gt;)  
-**Copyright**: Xotic750  
 <a name="exp_module_to-iso-string-x--module.exports"></a>
 
 ### `module.exports` ⇒ <code>string</code> ⏏
+
 This method returns a string in simplified extended ISO format (ISO 8601),
 which is always 24 or 27 characters long (YYYY-MM-DDTHH:mm:ss.sssZ or
 ±YYYYYY-MM-DDTHH:mm:ss.sssZ, respectively). The timezone is always zero UTC
@@ -42,13 +40,14 @@ offset, as denoted by the suffix "Z".
 - <code>TypeError</code> If date is not a Date object.
 - <code>RangeError</code> If date is invalid.
 
+| Param | Type                | Description    |
+| ----- | ------------------- | -------------- |
+| date  | <code>Object</code> | A Date object. |
 
-| Param | Type | Description |
-| --- | --- | --- |
-| date | <code>Object</code> | A Date object. |
+**Example**
 
-**Example**  
 ```js
-var toISOString = require('to-iso-string-x');
+import toISOString =from 'to-iso-string-x';
+
 toISOString(new Date(0)); // '1970-01-01T00:00:00.000Z'
 ```

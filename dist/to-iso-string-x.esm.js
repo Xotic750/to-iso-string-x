@@ -4,13 +4,11 @@ import padStart from 'string-pad-start-x';
 import map from 'array-map-x';
 import arraySlice from 'array-slice-x';
 import isFinite from 'is-finite-x';
-
-const nativeToISOString = typeof Date.prototype.toISOString === 'function' && Date.prototype.toISOString;
-
-let isWorking;
+var nativeToISOString = typeof Date.prototype.toISOString === 'function' && Date.prototype.toISOString;
+var isWorking;
 
 if (nativeToISOString) {
-  let res = attempt.call(new Date(0), nativeToISOString);
+  var res = attempt.call(new Date(0), nativeToISOString);
   isWorking = res.threw === false && res.value === '1970-01-01T00:00:00.000Z';
 
   if (isWorking) {
@@ -23,7 +21,6 @@ if (nativeToISOString) {
     isWorking = res.threw === false && res.value === '1969-12-31T23:59:59.999Z';
   }
 }
-
 /**
  * This method returns a string in simplified extended ISO format (ISO 8601),
  * which is always 24 or 27 characters long (YYYY-MM-DDTHH:mm:ss.sssZ or
@@ -35,14 +32,16 @@ if (nativeToISOString) {
  * @throws {RangeError} If date is invalid.
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  */
-let $toISOString;
+
+
+var $toISOString;
 
 if (isWorking) {
   $toISOString = function toISOString(date) {
     return nativeToISOString.call(date);
   };
 } else {
-  const {join} = Array.prototype;
+  var join = Array.prototype.join;
 
   $toISOString = function toISOString(date) {
     if (isDate(date) === false) {
@@ -54,17 +53,17 @@ if (isWorking) {
       throw new RangeError('toISOString called on non-finite value.');
     }
 
-    let year = date.getUTCFullYear();
-    let month = date.getUTCMonth();
-    // see https://github.com/es-shims/es5-shim/issues/111
+    var year = date.getUTCFullYear();
+    var month = date.getUTCMonth(); // see https://github.com/es-shims/es5-shim/issues/111
+
     /* eslint-disable-next-line no-bitwise */
-    year += (month / 12) >> 0; // floor
-    month = ((month % 12) + 12) % 12;
 
-    // the date time string format is specified in 15.9.1.15.
-    const parts = [month + 1, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()];
+    year += month / 12 >> 0; // floor
 
-    let sign;
+    month = (month % 12 + 12) % 12; // the date time string format is specified in 15.9.1.15.
+
+    var parts = [month + 1, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()];
+    var sign;
 
     if (year < 0) {
       sign = '-';
@@ -75,20 +74,19 @@ if (isWorking) {
     }
 
     year = sign + padStart(Math.abs(year), sign ? 6 : 4, '0');
-    const result = map(parts, function _mapper(item) {
+    var result = map(parts, function _mapper(item) {
       // pad months, days, hours, minutes, and seconds to have two digits.
       return padStart(item, 2, '0');
     });
+    var dateStr = "".concat(year, "-").concat(join.call(arraySlice(result, 0, 2), '-')); // pad milliseconds to have three digits.
 
-    const dateStr = `${year}-${join.call(arraySlice(result, 0, 2), '-')}`;
-    // pad milliseconds to have three digits.
-    const msStr = padStart(date.getUTCMilliseconds(), 3, '0');
-    const timeStr = `${join.call(arraySlice(result, 2), ':')}.${msStr}`;
-
-    return `${dateStr}T${timeStr}Z`;
+    var msStr = padStart(date.getUTCMilliseconds(), 3, '0');
+    var timeStr = "".concat(join.call(arraySlice(result, 2), ':'), ".").concat(msStr);
+    return "".concat(dateStr, "T").concat(timeStr, "Z");
   };
 }
 
-const tis = $toISOString;
-
+var tis = $toISOString;
 export default tis;
+
+//# sourceMappingURL=to-iso-string-x.esm.js.map
