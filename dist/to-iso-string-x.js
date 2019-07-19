@@ -2,13 +2,13 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2017",
-  "date": "2019-07-18T22:58:14.089Z",
+  "date": "2019-07-19T22:38:00.879Z",
   "describe": "",
   "description": "Cross-browser toISOString support.",
   "file": "to-iso-string-x.js",
   "hash": "ecc4ebdd0f125a966522",
   "license": "MIT",
-  "version": "2.0.2"
+  "version": "2.0.3"
 }
 */
 (function webpackUniversalModuleDefinition(root, factory) {
