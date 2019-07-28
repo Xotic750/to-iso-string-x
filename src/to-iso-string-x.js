@@ -76,7 +76,7 @@ const stringify = function stringify(date, month, year) {
   return `${dateStr}T${timeStr}Z`;
 };
 
-const wrappedToISOString = function wrappedToISOString() {
+const patchedToIsoString = function patchedToIsoString() {
   return function toISOString(date) {
     assertIsDate(date);
     assertAdobe(date);
@@ -97,7 +97,7 @@ const getSign = function getSign(year) {
   return '';
 };
 
-const patchedToISOString = function patchedToISOString() {
+export const implementation = function implementation() {
   return function toISOString(date) {
     assertIsDate(date);
     assertAdobe(date);
@@ -128,6 +128,6 @@ const patchedToISOString = function patchedToISOString() {
  * @throws {RangeError} If date is invalid.
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  */
-const $toISOString = isWorking ? wrappedToISOString() : patchedToISOString();
+const $toISOString = isWorking ? patchedToIsoString() : implementation();
 
 export default $toISOString;

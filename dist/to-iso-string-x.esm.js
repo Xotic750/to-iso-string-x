@@ -69,7 +69,7 @@ var stringify = function stringify(date, month, year) {
   return "".concat(dateStr, "T").concat(timeStr, "Z");
 };
 
-var wrappedToISOString = function wrappedToISOString() {
+var patchedToIsoString = function patchedToIsoString() {
   return function toISOString(date) {
     assertIsDate(date);
     assertAdobe(date);
@@ -89,7 +89,7 @@ var getSign = function getSign(year) {
   return '';
 };
 
-var patchedToISOString = function patchedToISOString() {
+export var implementation = function implementation() {
   return function toISOString(date) {
     assertIsDate(date);
     assertAdobe(date);
@@ -118,8 +118,7 @@ var patchedToISOString = function patchedToISOString() {
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  */
 
-
-var $toISOString = isWorking ? wrappedToISOString() : patchedToISOString();
+var $toISOString = isWorking ? patchedToIsoString() : implementation();
 export default $toISOString;
 
 //# sourceMappingURL=to-iso-string-x.esm.js.map

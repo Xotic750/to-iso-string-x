@@ -2,11 +2,11 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2017",
-  "date": "2019-07-28T12:37:31.069Z",
+  "date": "2019-07-28T14:14:12.957Z",
   "describe": "",
   "description": "Cross-browser toISOString support.",
   "file": "to-iso-string-x.js",
-  "hash": "8386eaa1e1734052469c",
+  "hash": "ca6906d56fdd7cf3a8df",
   "license": "MIT",
   "version": "2.0.10"
 }
@@ -1998,6 +1998,7 @@ var array_slice_x_esm_slice = function slice(array, start, end) {
 
 
 // CONCATENATED MODULE: ./dist/to-iso-string-x.esm.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "implementation", function() { return to_iso_string_x_esm_implementation; });
 
 
 
@@ -2069,7 +2070,7 @@ var to_iso_string_x_esm_stringify = function stringify(date, month, year) {
   return "".concat(dateStr, "T").concat(timeStr, "Z");
 };
 
-var wrappedToISOString = function wrappedToISOString() {
+var patchedToIsoString = function patchedToIsoString() {
   return function toISOString(date) {
     to_iso_string_x_esm_assertIsDate(date);
     assertAdobe(date);
@@ -2089,7 +2090,7 @@ var getSign = function getSign(year) {
   return '';
 };
 
-var to_iso_string_x_esm_patchedToISOString = function patchedToISOString() {
+var to_iso_string_x_esm_implementation = function implementation() {
   return function toISOString(date) {
     to_iso_string_x_esm_assertIsDate(date);
     assertAdobe(date);
@@ -2118,8 +2119,7 @@ var to_iso_string_x_esm_patchedToISOString = function patchedToISOString() {
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  */
 
-
-var $toISOString = to_iso_string_x_esm_isWorking ? wrappedToISOString() : to_iso_string_x_esm_patchedToISOString();
+var $toISOString = to_iso_string_x_esm_isWorking ? patchedToIsoString() : to_iso_string_x_esm_implementation();
 /* harmony default export */ var to_iso_string_x_esm = __webpack_exports__["default"] = ($toISOString);
 
 
