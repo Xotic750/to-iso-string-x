@@ -2,11 +2,11 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2017",
-  "date": "2019-07-27T22:10:53.504Z",
+  "date": "2019-07-28T12:37:31.069Z",
   "describe": "",
   "description": "Cross-browser toISOString support.",
   "file": "to-iso-string-x.js",
-  "hash": "1e5cd5b79e34e68a4d0d",
+  "hash": "8386eaa1e1734052469c",
   "license": "MIT",
   "version": "2.0.10"
 }
@@ -2004,23 +2004,108 @@ var array_slice_x_esm_slice = function slice(array, start, end) {
 
 
 
-var nativeToISOString = typeof Date.prototype.toISOString === 'function' && Date.prototype.toISOString;
-var to_iso_string_x_esm_isWorking;
+/* eslint-disable-next-line no-restricted-globals */
 
-if (nativeToISOString) {
-  var to_iso_string_x_esm_res = attempt_x_esm.call(new Date(0), nativeToISOString);
-  to_iso_string_x_esm_isWorking = to_iso_string_x_esm_res.threw === false && to_iso_string_x_esm_res.value === '1970-01-01T00:00:00.000Z';
+var globalIsFinite = isFinite;
+var to_iso_string_x_esm_abs = Math.abs;
+var _Date$prototype = Date.prototype,
+    ntis = _Date$prototype.toISOString,
+    getTime = _Date$prototype.getTime,
+    getUTCFullYear = _Date$prototype.getUTCFullYear,
+    getUTCMonth = _Date$prototype.getUTCMonth,
+    getUTCDate = _Date$prototype.getUTCDate,
+    getUTCHours = _Date$prototype.getUTCHours,
+    getUTCMinutes = _Date$prototype.getUTCMinutes,
+    getUTCSeconds = _Date$prototype.getUTCSeconds,
+    getUTCMilliseconds = _Date$prototype.getUTCMilliseconds;
+var nativeToISOString = typeof ntis === 'function' && ntis;
+var join = [].join;
 
-  if (to_iso_string_x_esm_isWorking) {
-    to_iso_string_x_esm_res = attempt_x_esm.call(new Date(-62198755200000), nativeToISOString);
-    to_iso_string_x_esm_isWorking = to_iso_string_x_esm_res.threw === false && to_iso_string_x_esm_res.value.indexOf('-000001') > -1;
+var to_iso_string_x_esm_test1 = function test1() {
+  var res = attempt_x_esm.call(new Date(0), nativeToISOString);
+  return res.threw === false && res.value === '1970-01-01T00:00:00.000Z';
+};
+
+var to_iso_string_x_esm_test2 = function test2() {
+  var res = attempt_x_esm.call(new Date(-62198755200000), nativeToISOString);
+  return res.threw === false && res.value.indexOf('-000001') > -1;
+};
+
+var to_iso_string_x_esm_test3 = function test3() {
+  var res = attempt_x_esm.call(new Date(-1), nativeToISOString);
+  return res.threw === false && res.value === '1969-12-31T23:59:59.999Z';
+};
+
+var to_iso_string_x_esm_isWorking = to_boolean_x_esm(nativeToISOString) && to_iso_string_x_esm_test1() && to_iso_string_x_esm_test2() && to_iso_string_x_esm_test3();
+
+var to_iso_string_x_esm_assertIsDate = function assertIsDate(date) {
+  if (is_date_object_default()(date) === false) {
+    throw new TypeError('toISOString called on incompatible receiver.');
   }
 
-  if (to_iso_string_x_esm_isWorking) {
-    to_iso_string_x_esm_res = attempt_x_esm.call(new Date(-1), nativeToISOString);
-    to_iso_string_x_esm_isWorking = to_iso_string_x_esm_res.threw === false && to_iso_string_x_esm_res.value === '1969-12-31T23:59:59.999Z';
+  return date;
+};
+
+var assertAdobe = function assertAdobe(date) {
+  if (globalIsFinite(date) === false || globalIsFinite(getTime.call(date)) === false) {
+    // Adobe Photoshop requires the second check.
+    throw new RangeError('toISOString called on non-finite value.');
   }
-}
+
+  return date;
+};
+
+var to_iso_string_x_esm_stringify = function stringify(date, month, year) {
+  // the date time string format is specified in 15.9.1.15.
+  var parts = [month + 1, getUTCDate.call(date), getUTCHours.call(date), getUTCMinutes.call(date), getUTCSeconds.call(date)];
+  var result = array_map_x_esm(parts, function iteratee(item) {
+    // pad months, days, hours, minutes, and seconds to have two digits.
+    return string_pad_start_x_esm(item, 2, '0');
+  });
+  var dateStr = "".concat(year, "-").concat(join.call(array_slice_x_esm(result, 0, 2), '-')); // pad milliseconds to have three digits.
+
+  var msStr = string_pad_start_x_esm(getUTCMilliseconds.call(date), 3, '0');
+  var timeStr = "".concat(join.call(array_slice_x_esm(result, 2), ':'), ".").concat(msStr);
+  return "".concat(dateStr, "T").concat(timeStr, "Z");
+};
+
+var wrappedToISOString = function wrappedToISOString() {
+  return function toISOString(date) {
+    to_iso_string_x_esm_assertIsDate(date);
+    assertAdobe(date);
+    return nativeToISOString.call(date);
+  };
+};
+
+var getSign = function getSign(year) {
+  if (year < 0) {
+    return '-';
+  }
+
+  if (year > 9999) {
+    return '+';
+  }
+
+  return '';
+};
+
+var to_iso_string_x_esm_patchedToISOString = function patchedToISOString() {
+  return function toISOString(date) {
+    to_iso_string_x_esm_assertIsDate(date);
+    assertAdobe(date);
+    var year = getUTCFullYear.call(date);
+    var month = getUTCMonth.call(date); // see https://github.com/es-shims/es5-shim/issues/111
+
+    /* eslint-disable-next-line no-bitwise */
+
+    year += month / 12 >> 0; // floor
+
+    month = (month % 12 + 12) % 12;
+    var sign = getSign(year);
+    year = sign + string_pad_start_x_esm(to_iso_string_x_esm_abs(year), sign ? 6 : 4, '0');
+    return to_iso_string_x_esm_stringify(date, month, year);
+  };
+};
 /**
  * This method returns a string in simplified extended ISO format (ISO 8601),
  * which is always 24 or 27 characters long (YYYY-MM-DDTHH:mm:ss.sssZ or
@@ -2034,60 +2119,8 @@ if (nativeToISOString) {
  */
 
 
-var $toISOString;
-
-if (to_iso_string_x_esm_isWorking) {
-  $toISOString = function toISOString(date) {
-    return nativeToISOString.call(date);
-  };
-} else {
-  var join = Array.prototype.join;
-
-  $toISOString = function toISOString(date) {
-    if (is_date_object_default()(date) === false) {
-      throw new TypeError('toISOString called on incompatible receiver.');
-    }
-
-    if (is_finite_x_esm(date) === false || is_finite_x_esm(date.getTime()) === false) {
-      // Adope Photoshop requires the second check.
-      throw new RangeError('toISOString called on non-finite value.');
-    }
-
-    var year = date.getUTCFullYear();
-    var month = date.getUTCMonth(); // see https://github.com/es-shims/es5-shim/issues/111
-
-    /* eslint-disable-next-line no-bitwise */
-
-    year += month / 12 >> 0; // floor
-
-    month = (month % 12 + 12) % 12; // the date time string format is specified in 15.9.1.15.
-
-    var parts = [month + 1, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()];
-    var sign;
-
-    if (year < 0) {
-      sign = '-';
-    } else if (year > 9999) {
-      sign = '+';
-    } else {
-      sign = '';
-    }
-
-    year = sign + string_pad_start_x_esm(Math.abs(year), sign ? 6 : 4, '0');
-    var result = array_map_x_esm(parts, function _mapper(item) {
-      // pad months, days, hours, minutes, and seconds to have two digits.
-      return string_pad_start_x_esm(item, 2, '0');
-    });
-    var dateStr = "".concat(year, "-").concat(join.call(array_slice_x_esm(result, 0, 2), '-')); // pad milliseconds to have three digits.
-
-    var msStr = string_pad_start_x_esm(date.getUTCMilliseconds(), 3, '0');
-    var timeStr = "".concat(join.call(array_slice_x_esm(result, 2), ':'), ".").concat(msStr);
-    return "".concat(dateStr, "T").concat(timeStr, "Z");
-  };
-}
-
-var tis = $toISOString;
-/* harmony default export */ var to_iso_string_x_esm = __webpack_exports__["default"] = (tis);
+var $toISOString = to_iso_string_x_esm_isWorking ? wrappedToISOString() : to_iso_string_x_esm_patchedToISOString();
+/* harmony default export */ var to_iso_string_x_esm = __webpack_exports__["default"] = ($toISOString);
 
 
 

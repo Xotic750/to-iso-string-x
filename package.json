@@ -54,8 +54,8 @@
     "array-slice-x": "^4.0.25",
     "attempt-x": "^2.0.22",
     "is-date-object": "^1.0.1",
-    "is-finite-x": "^4.0.25",
-    "string-pad-start-x": "^2.0.16"
+    "string-pad-start-x": "^2.0.16",
+    "to-boolean-x": "^2.0.24"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
