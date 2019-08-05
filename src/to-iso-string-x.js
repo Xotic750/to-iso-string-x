@@ -59,7 +59,8 @@ const assertAdobe = function assertAdobe(date) {
   return date;
 };
 
-const stringify = function stringify(date, month, year) {
+const stringify = function stringify(args) {
+  const [date, month, year] = args;
   // the date time string format is specified in 15.9.1.15.
   const parts = [month + 1, getUTCDate.call(date), getUTCHours.call(date), getUTCMinutes.call(date), getUTCSeconds.call(date)];
 
@@ -76,13 +77,11 @@ const stringify = function stringify(date, month, year) {
   return `${dateStr}T${timeStr}Z`;
 };
 
-const patchedToIsoString = function patchedToIsoString() {
-  return function toISOString(date) {
-    assertIsDate(date);
-    assertAdobe(date);
+const patchedToIsoString = function toISOString(date) {
+  assertIsDate(date);
+  assertAdobe(date);
 
-    return nativeToISOString.call(date);
-  };
+  return nativeToISOString.call(date);
 };
 
 const getSign = function getSign(year) {
@@ -97,24 +96,22 @@ const getSign = function getSign(year) {
   return '';
 };
 
-export const implementation = function implementation() {
-  return function toISOString(date) {
-    assertIsDate(date);
-    assertAdobe(date);
+export const implementation = function toISOString(date) {
+  assertIsDate(date);
+  assertAdobe(date);
 
-    let year = getUTCFullYear.call(date);
-    let month = getUTCMonth.call(date);
-    // see https://github.com/es-shims/es5-shim/issues/111
-    /* eslint-disable-next-line no-bitwise */
-    year += (month / 12) >> 0; // floor
-    month = ((month % 12) + 12) % 12;
+  let year = getUTCFullYear.call(date);
+  let month = getUTCMonth.call(date);
+  // see https://github.com/es-shims/es5-shim/issues/111
+  /* eslint-disable-next-line no-bitwise */
+  year += (month / 12) >> 0; // floor
+  month = ((month % 12) + 12) % 12;
 
-    const sign = getSign(year);
+  const sign = getSign(year);
 
-    year = sign + padStart(abs(year), sign ? 6 : 4, '0');
+  year = sign + padStart(abs(year), sign ? 6 : 4, '0');
 
-    return stringify(date, month, year);
-  };
+  return stringify([date, month, year]);
 };
 
 /**
@@ -128,6 +125,6 @@ export const implementation = function implementation() {
  * @throws {RangeError} If date is invalid.
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  */
-const $toISOString = isWorking ? patchedToIsoString() : implementation();
+const $toISOString = isWorking ? patchedToIsoString : implementation;
 
 export default $toISOString;

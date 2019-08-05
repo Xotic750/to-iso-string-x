@@ -1,3 +1,11 @@
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 import attempt from 'attempt-x';
 import isDate from 'is-date-object';
 import padStart from 'string-pad-start-x';
@@ -55,8 +63,13 @@ var assertAdobe = function assertAdobe(date) {
   return date;
 };
 
-var stringify = function stringify(date, month, year) {
-  // the date time string format is specified in 15.9.1.15.
+var stringify = function stringify(args) {
+  var _args = _slicedToArray(args, 3),
+      date = _args[0],
+      month = _args[1],
+      year = _args[2]; // the date time string format is specified in 15.9.1.15.
+
+
   var parts = [month + 1, getUTCDate.call(date), getUTCHours.call(date), getUTCMinutes.call(date), getUTCSeconds.call(date)];
   var result = map(parts, function iteratee(item) {
     // pad months, days, hours, minutes, and seconds to have two digits.
@@ -69,12 +82,10 @@ var stringify = function stringify(date, month, year) {
   return "".concat(dateStr, "T").concat(timeStr, "Z");
 };
 
-var patchedToIsoString = function patchedToIsoString() {
-  return function toISOString(date) {
-    assertIsDate(date);
-    assertAdobe(date);
-    return nativeToISOString.call(date);
-  };
+var patchedToIsoString = function toISOString(date) {
+  assertIsDate(date);
+  assertAdobe(date);
+  return nativeToISOString.call(date);
 };
 
 var getSign = function getSign(year) {
@@ -89,22 +100,20 @@ var getSign = function getSign(year) {
   return '';
 };
 
-export var implementation = function implementation() {
-  return function toISOString(date) {
-    assertIsDate(date);
-    assertAdobe(date);
-    var year = getUTCFullYear.call(date);
-    var month = getUTCMonth.call(date); // see https://github.com/es-shims/es5-shim/issues/111
+export var implementation = function toISOString(date) {
+  assertIsDate(date);
+  assertAdobe(date);
+  var year = getUTCFullYear.call(date);
+  var month = getUTCMonth.call(date); // see https://github.com/es-shims/es5-shim/issues/111
 
-    /* eslint-disable-next-line no-bitwise */
+  /* eslint-disable-next-line no-bitwise */
 
-    year += month / 12 >> 0; // floor
+  year += month / 12 >> 0; // floor
 
-    month = (month % 12 + 12) % 12;
-    var sign = getSign(year);
-    year = sign + padStart(abs(year), sign ? 6 : 4, '0');
-    return stringify(date, month, year);
-  };
+  month = (month % 12 + 12) % 12;
+  var sign = getSign(year);
+  year = sign + padStart(abs(year), sign ? 6 : 4, '0');
+  return stringify([date, month, year]);
 };
 /**
  * This method returns a string in simplified extended ISO format (ISO 8601),
@@ -118,7 +127,7 @@ export var implementation = function implementation() {
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  */
 
-var $toISOString = isWorking ? patchedToIsoString() : implementation();
+var $toISOString = isWorking ? patchedToIsoString : implementation;
 export default $toISOString;
 
 //# sourceMappingURL=to-iso-string-x.esm.js.map

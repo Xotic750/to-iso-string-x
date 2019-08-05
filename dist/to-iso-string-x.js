@@ -2,11 +2,11 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2017",
-  "date": "2019-08-04T23:31:28.245Z",
+  "date": "2019-08-05T12:05:43.120Z",
   "describe": "",
   "description": "Cross-browser toISOString support.",
   "file": "to-iso-string-x.js",
-  "hash": "f460a3c2afe2118f4dda",
+  "hash": "5998867e9143a61daf76",
   "license": "MIT",
   "version": "2.0.11"
 }
@@ -2047,6 +2047,14 @@ var array_slice_x_esm_slice = function slice(array, start, end) {
 
 // CONCATENATED MODULE: ./dist/to-iso-string-x.esm.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "implementation", function() { return to_iso_string_x_esm_implementation; });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -2104,8 +2112,13 @@ var assertAdobe = function assertAdobe(date) {
   return date;
 };
 
-var to_iso_string_x_esm_stringify = function stringify(date, month, year) {
-  // the date time string format is specified in 15.9.1.15.
+var to_iso_string_x_esm_stringify = function stringify(args) {
+  var _args = _slicedToArray(args, 3),
+      date = _args[0],
+      month = _args[1],
+      year = _args[2]; // the date time string format is specified in 15.9.1.15.
+
+
   var parts = [month + 1, getUTCDate.call(date), getUTCHours.call(date), getUTCMinutes.call(date), getUTCSeconds.call(date)];
   var result = array_map_x_esm(parts, function iteratee(item) {
     // pad months, days, hours, minutes, and seconds to have two digits.
@@ -2118,12 +2131,10 @@ var to_iso_string_x_esm_stringify = function stringify(date, month, year) {
   return "".concat(dateStr, "T").concat(timeStr, "Z");
 };
 
-var patchedToIsoString = function patchedToIsoString() {
-  return function toISOString(date) {
-    to_iso_string_x_esm_assertIsDate(date);
-    assertAdobe(date);
-    return nativeToISOString.call(date);
-  };
+var patchedToIsoString = function toISOString(date) {
+  to_iso_string_x_esm_assertIsDate(date);
+  assertAdobe(date);
+  return nativeToISOString.call(date);
 };
 
 var getSign = function getSign(year) {
@@ -2138,22 +2149,20 @@ var getSign = function getSign(year) {
   return '';
 };
 
-var to_iso_string_x_esm_implementation = function implementation() {
-  return function toISOString(date) {
-    to_iso_string_x_esm_assertIsDate(date);
-    assertAdobe(date);
-    var year = getUTCFullYear.call(date);
-    var month = getUTCMonth.call(date); // see https://github.com/es-shims/es5-shim/issues/111
+var to_iso_string_x_esm_implementation = function toISOString(date) {
+  to_iso_string_x_esm_assertIsDate(date);
+  assertAdobe(date);
+  var year = getUTCFullYear.call(date);
+  var month = getUTCMonth.call(date); // see https://github.com/es-shims/es5-shim/issues/111
 
-    /* eslint-disable-next-line no-bitwise */
+  /* eslint-disable-next-line no-bitwise */
 
-    year += month / 12 >> 0; // floor
+  year += month / 12 >> 0; // floor
 
-    month = (month % 12 + 12) % 12;
-    var sign = getSign(year);
-    year = sign + string_pad_start_x_esm(to_iso_string_x_esm_abs(year), sign ? 6 : 4, '0');
-    return to_iso_string_x_esm_stringify(date, month, year);
-  };
+  month = (month % 12 + 12) % 12;
+  var sign = getSign(year);
+  year = sign + string_pad_start_x_esm(to_iso_string_x_esm_abs(year), sign ? 6 : 4, '0');
+  return to_iso_string_x_esm_stringify([date, month, year]);
 };
 /**
  * This method returns a string in simplified extended ISO format (ISO 8601),
@@ -2167,7 +2176,7 @@ var to_iso_string_x_esm_implementation = function implementation() {
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  */
 
-var $toISOString = to_iso_string_x_esm_isWorking ? patchedToIsoString() : to_iso_string_x_esm_implementation();
+var $toISOString = to_iso_string_x_esm_isWorking ? patchedToIsoString : to_iso_string_x_esm_implementation;
 /* harmony default export */ var to_iso_string_x_esm = __webpack_exports__["default"] = ($toISOString);
 
 
