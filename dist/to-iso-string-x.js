@@ -2,13 +2,13 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2017",
-  "date": "2019-08-05T17:35:37.984Z",
+  "date": "2019-08-05T20:37:23.921Z",
   "describe": "",
   "description": "Cross-browser toISOString support.",
   "file": "to-iso-string-x.js",
-  "hash": "5998867e9143a61daf76",
+  "hash": "e68f17a7a57687ef8256",
   "license": "MIT",
-  "version": "2.0.11"
+  "version": "2.0.12"
 }
 */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -1614,48 +1614,6 @@ var string_pad_start_x_esm_padStart = function padStart(string, targetLength) {
 /* harmony default export */ var string_pad_start_x_esm = (string_pad_start_x_esm_padStart);
 
 
-// CONCATENATED MODULE: ./node_modules/has-boxed-string-x/dist/has-boxed-string-x.esm.js
-var has_boxed_string_x_esm_string = 'a';
-var boxedString = {}.constructor(has_boxed_string_x_esm_string);
-/**
- * Check failure of by-index access of string characters (IE < 9)
- * and failure of `0 in boxedString` (Rhino).
- *
- * `true` if no failure; otherwise `false`.
- *
- * @type boolean
- */
-
-var hasBoxed = boxedString[0] === has_boxed_string_x_esm_string && 0 in boxedString;
-/* harmony default export */ var has_boxed_string_x_esm = (hasBoxed);
-
-
-// EXTERNAL MODULE: ./node_modules/is-string/index.js
-var is_string = __webpack_require__(3);
-var is_string_default = /*#__PURE__*/__webpack_require__.n(is_string);
-
-// CONCATENATED MODULE: ./node_modules/split-if-boxed-bug-x/dist/split-if-boxed-bug-x.esm.js
-
-
-var split_if_boxed_bug_x_esm_EMPTY_STRING = '';
-var strSplit = split_if_boxed_bug_x_esm_EMPTY_STRING.split;
-var isStringFn = has_boxed_string_x_esm === false && typeof strSplit === 'function' && is_string_default.a;
-/**
- * This method tests if a value is a string with the boxed bug; splits to an
- * array for iteration; otherwise returns the original value.
- *
- * @param {*} [value] - The value to be tested.
- * @returns {*} An array or characters if value was a string with the boxed bug;
- *  otherwise the value.
- */
-
-var splitIfBoxedBug = function splitIfBoxedBug(value) {
-  return isStringFn && isStringFn(value) ? strSplit.call(value, split_if_boxed_bug_x_esm_EMPTY_STRING) : value;
-};
-
-/* harmony default export */ var split_if_boxed_bug_x_esm = (splitIfBoxedBug);
-
-
 // CONCATENATED MODULE: ./node_modules/to-object-x/dist/to-object-x.esm.js
 
 var castObject = {}.constructor;
@@ -1727,6 +1685,160 @@ var assert_is_function_x_esm_assertIsFunction = function assertIsFunction(callba
 /* harmony default export */ var assert_is_function_x_esm = (assert_is_function_x_esm_assertIsFunction);
 
 
+// CONCATENATED MODULE: ./node_modules/has-boxed-string-x/dist/has-boxed-string-x.esm.js
+var has_boxed_string_x_esm_string = 'a';
+var boxedString = {}.constructor(has_boxed_string_x_esm_string);
+/**
+ * Check failure of by-index access of string characters (IE < 9)
+ * and failure of `0 in boxedString` (Rhino).
+ *
+ * `true` if no failure; otherwise `false`.
+ *
+ * @type boolean
+ */
+
+var hasBoxed = boxedString[0] === has_boxed_string_x_esm_string && 0 in boxedString;
+/* harmony default export */ var has_boxed_string_x_esm = (hasBoxed);
+
+
+// EXTERNAL MODULE: ./node_modules/is-string/index.js
+var is_string = __webpack_require__(3);
+var is_string_default = /*#__PURE__*/__webpack_require__.n(is_string);
+
+// CONCATENATED MODULE: ./node_modules/split-if-boxed-bug-x/dist/split-if-boxed-bug-x.esm.js
+
+
+var split_if_boxed_bug_x_esm_EMPTY_STRING = '';
+var strSplit = split_if_boxed_bug_x_esm_EMPTY_STRING.split;
+var isStringFn = has_boxed_string_x_esm === false && typeof strSplit === 'function' && is_string_default.a;
+/**
+ * This method tests if a value is a string with the boxed bug; splits to an
+ * array for iteration; otherwise returns the original value.
+ *
+ * @param {*} [value] - The value to be tested.
+ * @returns {*} An array or characters if value was a string with the boxed bug;
+ *  otherwise the value.
+ */
+
+var splitIfBoxedBug = function splitIfBoxedBug(value) {
+  return isStringFn && isStringFn(value) ? strSplit.call(value, split_if_boxed_bug_x_esm_EMPTY_STRING) : value;
+};
+
+/* harmony default export */ var split_if_boxed_bug_x_esm = (splitIfBoxedBug);
+
+
+// CONCATENATED MODULE: ./node_modules/array-any-x/dist/array-any-x.esm.js
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var performCallback = function performCallback(args) {
+  var _args = _slicedToArray(args, 6),
+      noThis = _args[0],
+      thisArg = _args[1],
+      callBack = _args[2],
+      iterable = _args[3],
+      index = _args[4],
+      object = _args[5];
+
+  var item = iterable[index];
+  return noThis ? callBack(item, index, object) : callBack.call(thisArg, item, index, object);
+};
+
+var array_any_x_esm_getIterableLengthPair = function getIterableLengthPair(object) {
+  var iterable = split_if_boxed_bug_x_esm(object);
+  return [iterable, to_length_x_esm(iterable.length)];
+}; // eslint-disable jsdoc/check-param-names
+// noinspection JSCommentMatchesSignature
+
+/**
+ * This method tests whether some element in the array passes the test
+ * implemented by the provided function.
+ *
+ * @function any
+ * @param {Array} array - The array to iterate over.
+ * @param {Function} callBack - Function to test for each element.
+ * @param {*} [thisArg] - Value to use as this when executing callback.
+ * @throws {TypeError} If array is null or undefined.
+ * @throws {TypeError} If callBack is not a function.
+ * @returns {boolean} `true` if the callback function returns a truthy value for
+ *  any array element; otherwise, `false`.
+ */
+// eslint-enable jsdoc/check-param-names
+
+
+var array_any_x_esm_any = function any(array, callBack
+/* , thisArg */
+) {
+  var object = to_object_x_esm(array); // If no callback function or if callback is not a callable function
+
+  assert_is_function_x_esm(callBack);
+
+  var _getIterableLengthPai = array_any_x_esm_getIterableLengthPair(object),
+      _getIterableLengthPai2 = _slicedToArray(_getIterableLengthPai, 2),
+      iterable = _getIterableLengthPai2[0],
+      length = _getIterableLengthPai2[1];
+  /* eslint-disable-next-line prefer-rest-params,no-void */
+
+
+  var thisArg = arguments.length > 2 ? arguments[2] : void 0;
+  var noThis = typeof thisArg === 'undefined';
+
+  if (length) {
+    for (var index = 0; index < length; index += 1) {
+      if (performCallback([noThis, thisArg, callBack, iterable, index, object])) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+};
+
+/* harmony default export */ var array_any_x_esm = (array_any_x_esm_any);
+
+
+// CONCATENATED MODULE: ./node_modules/array-all-x/dist/array-all-x.esm.js
+ // eslint-disable jsdoc/check-param-names
+// noinspection JSCommentMatchesSignature
+
+/**
+ * This method executes a provided function once for each array element.
+ *
+ * @function all
+ * @param {Array} array - The array to iterate over.
+ * @param {Function} callBack - Function to execute for each element.
+ * @param {*} [thisArg] - Value to use as this when executing callback.
+ * @throws {TypeError} If array is null or undefined.
+ * @throws {TypeError} If callBack is not a function.
+ */
+// eslint-enable jsdoc/check-param-names
+
+var array_all_x_esm_all = function all(array, callBack
+/* , thisArg */
+) {
+  var iteratee = function iteratee() {
+    /* eslint-disable-next-line prefer-rest-params,babel/no-invalid-this */
+    callBack.call(this, arguments[0], arguments[1], arguments[2]);
+  };
+  /* eslint-disable-next-line prefer-rest-params */
+
+
+  array_any_x_esm(array, iteratee, arguments[2]);
+};
+
+/* harmony default export */ var array_all_x_esm = (array_all_x_esm_all);
+
+
 // CONCATENATED MODULE: ./node_modules/array-map-x/dist/array-map-x.esm.js
 
 
@@ -1747,7 +1859,7 @@ var array_map_x_esm_test1 = function test1() {
 };
 
 var array_map_x_esm_test2 = function test2() {
-  var res = attempt_x_esm.call({}.constructor('ab'), nativeMap, identity);
+  var res = attempt_x_esm.call(to_object_x_esm('ab'), nativeMap, identity);
   return res.threw === false && res.value && res.value.length === 2 && res.value[0] === 'a' && res.value[1] === 'b';
 };
 
@@ -1768,6 +1880,10 @@ var array_map_x_esm_test4 = function test4() {
   return res.threw === false && res.value && res.value.length === 3 && !(1 in res.value);
 };
 
+var getResultTest5 = function getResultTest5(res, div) {
+  return res.threw === false && res.value && res.value.length === 1 && res.value[0] === div;
+};
+
 var array_map_x_esm_test5 = function test5() {
   var doc = typeof document !== 'undefined' && document;
 
@@ -1776,7 +1892,7 @@ var array_map_x_esm_test5 = function test5() {
     var div = doc.createElement('div');
     fragment.appendChild(div);
     var res = attempt_x_esm.call(fragment.childNodes, nativeMap, identity);
-    return res.threw === false && res.value && res.value.length === 1 && res.value[0] === div;
+    return getResultTest5(res, div);
   }
 
   return true;
@@ -1785,15 +1901,18 @@ var array_map_x_esm_test5 = function test5() {
 var array_map_x_esm_test6 = function test6() {
   var isStrict = function returnIsStrict() {
     /* eslint-disable-next-line babel/no-invalid-this */
-    return true.constructor(this) === false;
+    return to_boolean_x_esm(this) === false;
   }();
 
   if (isStrict) {
     var spy = null;
-    var res = attempt_x_esm.call([1], nativeMap, function testThis() {
+
+    var testThis = function testThis() {
       /* eslint-disable-next-line babel/no-invalid-this */
       spy = typeof this === 'string';
-    }, 'x');
+    };
+
+    var res = attempt_x_esm.call([1], nativeMap, testThis, 'x');
     return res.threw === false && res.value && res.value.length === 1 && spy === true;
   }
 
@@ -1805,53 +1924,49 @@ var array_map_x_esm_test7 = function test7() {
   var fn = 'return nativeMap.call("foo", function (_, __, context) {' + 'if (castBoolean(context) === false || typeof context !== "object") {' + 'spy.value = true;}});';
   /* eslint-disable-next-line no-new-func */
 
-  var res = attempt_x_esm(Function('nativeMap', 'spy', 'castBoolean', fn), nativeMap, spy, true.constructor);
+  var res = attempt_x_esm(Function('nativeMap', 'spy', 'castBoolean', fn), nativeMap, spy, to_boolean_x_esm);
   return res.threw === false && res.value && res.value.length === 3 && spy.value !== true;
 };
 
-var isWorking = true.constructor(nativeMap) && array_map_x_esm_test1() && array_map_x_esm_test2() && array_map_x_esm_test3() && array_map_x_esm_test4() && array_map_x_esm_test5() && array_map_x_esm_test6() && array_map_x_esm_test7();
+var isWorking = to_boolean_x_esm(nativeMap) && array_map_x_esm_test1() && array_map_x_esm_test2() && array_map_x_esm_test3() && array_map_x_esm_test4() && array_map_x_esm_test5() && array_map_x_esm_test6() && array_map_x_esm_test7();
 
-var array_map_x_esm_patchedMap = function patchedMap() {
-  return function map(array, callBack
-  /* , thisArg */
-  ) {
-    require_object_coercible_x_esm(array);
-    var args = [assert_is_function_x_esm(callBack)];
+var patchedMap = function map(array, callBack
+/* , thisArg */
+) {
+  require_object_coercible_x_esm(array);
+  var args = [assert_is_function_x_esm(callBack)];
 
-    if (arguments.length > 2) {
-      /* eslint-disable-next-line prefer-rest-params,prefer-destructuring */
-      args[1] = arguments[2];
-    }
+  if (arguments.length > 2) {
+    /* eslint-disable-next-line prefer-rest-params,prefer-destructuring */
+    args[1] = arguments[2];
+  }
 
-    return nativeMap.apply(array, args);
-  };
+  return nativeMap.apply(array, args);
 };
 
-var array_map_x_esm_implementation = function implementation() {
-  return function map(array, callBack
-  /* , thisArg */
-  ) {
-    var object = to_object_x_esm(array); // If no callback function or if callback is not a callable function
+var implementation = function map(array, callBack
+/* , thisArg */
+) {
+  var object = to_object_x_esm(array); // If no callback function or if callback is not a callable function
 
-    assert_is_function_x_esm(callBack);
-    var iterable = split_if_boxed_bug_x_esm(object);
-    var length = to_length_x_esm(iterable.length);
-    /* eslint-disable-next-line prefer-rest-params,no-void */
+  assert_is_function_x_esm(callBack);
+  var result = [];
 
-    var thisArg = arguments.length > 2 ? arguments[2] : void 0;
-    var noThis = typeof thisArg === 'undefined';
-    var result = [];
-    result.length = length;
+  var iteratee = function iteratee() {
+    /* eslint-disable-next-line prefer-rest-params */
+    var i = arguments[1];
+    /* eslint-disable-next-line prefer-rest-params */
 
-    for (var i = 0; i < length; i += 1) {
-      if (i in iterable) {
-        var item = iterable[i];
-        result[i] = noThis ? callBack(item, i, object) : callBack.call(thisArg, item, i, object);
-      }
+    if (i in arguments[2]) {
+      /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+      result[i] = callBack.call(this, arguments[0], i, object);
     }
-
-    return result;
   };
+  /* eslint-disable-next-line prefer-rest-params */
+
+
+  array_all_x_esm(object, iteratee, arguments[2]);
+  return result;
 };
 /**
  * This method creates a new array with the results of calling a provided
@@ -1866,7 +1981,7 @@ var array_map_x_esm_implementation = function implementation() {
  * callback function.
  */
 
-var $map = isWorking ? array_map_x_esm_patchedMap() : array_map_x_esm_implementation();
+var $map = isWorking ? patchedMap : implementation;
 /* harmony default export */ var array_map_x_esm = ($map);
 
 
@@ -2047,13 +2162,13 @@ var array_slice_x_esm_slice = function slice(array, start, end) {
 
 // CONCATENATED MODULE: ./dist/to-iso-string-x.esm.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "implementation", function() { return to_iso_string_x_esm_implementation; });
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function to_iso_string_x_esm_slicedToArray(arr, i) { return to_iso_string_x_esm_arrayWithHoles(arr) || to_iso_string_x_esm_iterableToArrayLimit(arr, i) || to_iso_string_x_esm_nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function to_iso_string_x_esm_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function to_iso_string_x_esm_iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function to_iso_string_x_esm_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -2113,7 +2228,7 @@ var assertAdobe = function assertAdobe(date) {
 };
 
 var to_iso_string_x_esm_stringify = function stringify(args) {
-  var _args = _slicedToArray(args, 3),
+  var _args = to_iso_string_x_esm_slicedToArray(args, 3),
       date = _args[0],
       month = _args[1],
       year = _args[2]; // the date time string format is specified in 15.9.1.15.
