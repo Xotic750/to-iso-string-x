@@ -1,15 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`toISOString should throw RangeError date object is invalid 1`] = `"toISOString called on non-finite value."`;
+exports[`toISOString 0 should throw RangeError date object is invalid 1`] = `"toISOString called on non-finite value."`;
 
-exports[`toISOString should throw TypeError if not supplied a date object 1`] = `"toISOString called on incompatible receiver."`;
+exports[`toISOString 0 should throw TypeError if not supplied a date object 1`] = `"toISOString called on incompatible receiver."`;
 
-exports[`toISOString should throw TypeError if not supplied a date object 2`] = `"toISOString called on incompatible receiver."`;
+exports[`toISOString 0 should throw TypeError if not supplied a date object 2`] = `"toISOString called on incompatible receiver."`;
 
-exports[`toISOString should throw TypeError if not supplied a date object 3`] = `"toISOString called on incompatible receiver."`;
+exports[`toISOString 0 should throw TypeError if not supplied a date object 3`] = `"toISOString called on incompatible receiver."`;
 
-exports[`toISOString should throw TypeError if not supplied a date object 4`] = `"toISOString called on incompatible receiver."`;
+exports[`toISOString 0 should throw TypeError if not supplied a date object 4`] = `"toISOString called on incompatible receiver."`;
 
-exports[`toISOString should throw TypeError if not supplied a date object 5`] = `"toISOString called on incompatible receiver."`;
+exports[`toISOString 0 should throw TypeError if not supplied a date object 5`] = `"toISOString called on incompatible receiver."`;
 
-exports[`toISOString should throw TypeError if not supplied a date object 6`] = `"toISOString called on incompatible receiver."`;
+exports[`toISOString 0 should throw TypeError if not supplied a date object 6`] = `"toISOString called on incompatible receiver."`;
+
+exports[`toISOString 1 should throw RangeError date object is invalid 1`] = `"toISOString called on non-finite value."`;
+
+exports[`toISOString 1 should throw TypeError if not supplied a date object 1`] = `"toISOString called on incompatible receiver."`;
+
+exports[`toISOString 1 should throw TypeError if not supplied a date object 2`] = `"toISOString called on incompatible receiver."`;
+
+exports[`toISOString 1 should throw TypeError if not supplied a date object 3`] = `"toISOString called on incompatible receiver."`;
+
+exports[`toISOString 1 should throw TypeError if not supplied a date object 4`] = `"toISOString called on incompatible receiver."`;
+
+exports[`toISOString 1 should throw TypeError if not supplied a date object 5`] = `"toISOString called on incompatible receiver."`;
+
+exports[`toISOString 1 should throw TypeError if not supplied a date object 6`] = `"toISOString called on incompatible receiver."`;
