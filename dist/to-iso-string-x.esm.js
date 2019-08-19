@@ -12,39 +12,43 @@ import padStart from 'string-pad-start-x';
 import map from 'array-map-x';
 import arraySlice from 'array-slice-x';
 import toBoolean from 'to-boolean-x';
+import methodize from 'simple-methodize-x';
 /* eslint-disable-next-line no-restricted-globals */
 
 var globalIsFinite = isFinite;
 var abs = Math.abs;
-var _Date$prototype = Date.prototype,
-    ntis = _Date$prototype.toISOString,
-    getTime = _Date$prototype.getTime,
-    getUTCFullYear = _Date$prototype.getUTCFullYear,
-    getUTCMonth = _Date$prototype.getUTCMonth,
-    getUTCDate = _Date$prototype.getUTCDate,
-    getUTCHours = _Date$prototype.getUTCHours,
-    getUTCMinutes = _Date$prototype.getUTCMinutes,
-    getUTCSeconds = _Date$prototype.getUTCSeconds,
-    getUTCMilliseconds = _Date$prototype.getUTCMilliseconds;
-var nativeToISOString = typeof ntis === 'function' && ntis;
-var join = [].join;
+var $Date = Date;
+var datePrototype = $Date.prototype;
+var getTime = methodize(datePrototype.getTime);
+var getUTCFullYear = methodize(datePrototype.getUTCFullYear);
+var getUTCMonth = methodize(datePrototype.getUTCMonth);
+var getUTCDate = methodize(datePrototype.getUTCDate);
+var getUTCHours = methodize(datePrototype.getUTCHours);
+var getUTCMinutes = methodize(datePrototype.getUTCMinutes);
+var getUTCSeconds = methodize(datePrototype.getUTCSeconds);
+var getUTCMilliseconds = methodize(datePrototype.getUTCMilliseconds);
+var ntis = datePrototype.toISOString;
+var methodizedToISOString = typeof ntis === 'function' && methodize(ntis);
+var join = methodize([].join);
+var EMPTY_STRING = '';
+var indexOf = methodize(EMPTY_STRING.indexOf);
 
 var test1 = function test1() {
-  var res = attempt.call(new Date(0), nativeToISOString);
+  var res = attempt(methodizedToISOString, new $Date(0));
   return res.threw === false && res.value === '1970-01-01T00:00:00.000Z';
 };
 
 var test2 = function test2() {
-  var res = attempt.call(new Date(-62198755200000), nativeToISOString);
-  return res.threw === false && res.value.indexOf('-000001') > -1;
+  var res = attempt(methodizedToISOString, new $Date(-62198755200000));
+  return res.threw === false && indexOf(res.value, '-000001') > -1;
 };
 
 var test3 = function test3() {
-  var res = attempt.call(new Date(-1), nativeToISOString);
+  var res = attempt(methodizedToISOString, new $Date(-1));
   return res.threw === false && res.value === '1969-12-31T23:59:59.999Z';
 };
 
-var isWorking = toBoolean(nativeToISOString) && test1() && test2() && test3();
+var isWorking = toBoolean(methodizedToISOString) && test1() && test2() && test3();
 
 var assertIsDate = function assertIsDate(date) {
   if (isDate(date) === false) {
@@ -55,7 +59,7 @@ var assertIsDate = function assertIsDate(date) {
 };
 
 var assertAdobe = function assertAdobe(date) {
-  if (globalIsFinite(date) === false || globalIsFinite(getTime.call(date)) === false) {
+  if (globalIsFinite(date) === false || globalIsFinite(getTime(date)) === false) {
     // Adobe Photoshop requires the second check.
     throw new RangeError('toISOString called on non-finite value.');
   }
@@ -70,22 +74,22 @@ var stringify = function stringify(args) {
       year = _args[2]; // the date time string format is specified in 15.9.1.15.
 
 
-  var parts = [month + 1, getUTCDate.call(date), getUTCHours.call(date), getUTCMinutes.call(date), getUTCSeconds.call(date)];
+  var parts = [month + 1, getUTCDate(date), getUTCHours(date), getUTCMinutes(date), getUTCSeconds(date)];
   var result = map(parts, function iteratee(item) {
     // pad months, days, hours, minutes, and seconds to have two digits.
     return padStart(item, 2, '0');
   });
-  var dateStr = "".concat(year, "-").concat(join.call(arraySlice(result, 0, 2), '-')); // pad milliseconds to have three digits.
+  var dateStr = "".concat(year, "-").concat(join(arraySlice(result, 0, 2), '-')); // pad milliseconds to have three digits.
 
-  var msStr = padStart(getUTCMilliseconds.call(date), 3, '0');
-  var timeStr = "".concat(join.call(arraySlice(result, 2), ':'), ".").concat(msStr);
+  var msStr = padStart(getUTCMilliseconds(date), 3, '0');
+  var timeStr = "".concat(join(arraySlice(result, 2), ':'), ".").concat(msStr);
   return "".concat(dateStr, "T").concat(timeStr, "Z");
 };
 
 var patchedToIsoString = function toISOString(date) {
   assertIsDate(date);
   assertAdobe(date);
-  return nativeToISOString.call(date);
+  return methodizedToISOString(date);
 };
 
 var getSign = function getSign(year) {
@@ -97,14 +101,14 @@ var getSign = function getSign(year) {
     return '+';
   }
 
-  return '';
+  return EMPTY_STRING;
 };
 
 export var implementation = function toISOString(date) {
   assertIsDate(date);
   assertAdobe(date);
-  var year = getUTCFullYear.call(date);
-  var month = getUTCMonth.call(date); // see https://github.com/es-shims/es5-shim/issues/111
+  var year = getUTCFullYear(date);
+  var month = getUTCMonth(date); // see https://github.com/es-shims/es5-shim/issues/111
 
   /* eslint-disable-next-line no-bitwise */
 
@@ -121,8 +125,8 @@ export var implementation = function toISOString(date) {
  * ±YYYYYY-MM-DDTHH:mm:ss.sssZ, respectively). The timezone is always zero UTC
  * offset, as denoted by the suffix "Z".
  *
- * @param {object} date - A Date object.
- * @throws {TypeError} If date is not a Date object.
+ * @param {object} date - A $Date object.
+ * @throws {TypeError} If date is not a $Date object.
  * @throws {RangeError} If date is invalid.
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  */

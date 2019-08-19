@@ -2,11 +2,11 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2017",
-  "date": "2019-08-15T20:48:52.133Z",
+  "date": "2019-08-19T12:45:10.029Z",
   "describe": "",
   "description": "Cross-browser toISOString support.",
   "file": "to-iso-string-x.js",
-  "hash": "debfebbacd803734feae",
+  "hash": "e92a17c9405a1b587b04",
   "license": "MIT",
   "version": "2.1.0"
 }
@@ -223,33 +223,6 @@ module.exports = function isPrimitive(val) {
 "use strict";
 
 
-var getDay = Date.prototype.getDay;
-var tryDateObject = function tryDateObject(value) {
-	try {
-		getDay.call(value);
-		return true;
-	} catch (e) {
-		return false;
-	}
-};
-
-var toStr = Object.prototype.toString;
-var dateClass = '[object Date]';
-var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
-
-module.exports = function isDateObject(value) {
-	if (typeof value !== 'object' || value === null) { return false; }
-	return hasToStringTag ? tryDateObject(value) : toStr.call(value) === dateClass;
-};
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var strValue = String.prototype.valueOf;
 var tryStringObject = function tryStringObject(value) {
 	try {
@@ -267,6 +240,33 @@ module.exports = function isString(value) {
 	if (typeof value === 'string') { return true; }
 	if (typeof value !== 'object') { return false; }
 	return hasToStringTag ? tryStringObject(value) : toStr.call(value) === strClass;
+};
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getDay = Date.prototype.getDay;
+var tryDateObject = function tryDateObject(value) {
+	try {
+		getDay.call(value);
+		return true;
+	} catch (e) {
+		return false;
+	}
+};
+
+var toStr = Object.prototype.toString;
+var dateClass = '[object Date]';
+var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+
+module.exports = function isDateObject(value) {
+	if (typeof value !== 'object' || value === null) { return false; }
+	return hasToStringTag ? tryDateObject(value) : toStr.call(value) === dateClass;
 };
 
 
@@ -445,7 +445,7 @@ var attempt = function attempt(fn) {
 
 
 // EXTERNAL MODULE: ./node_modules/is-date-object/index.js
-var is_date_object = __webpack_require__(2);
+var is_date_object = __webpack_require__(3);
 var is_date_object_default = /*#__PURE__*/__webpack_require__.n(is_date_object);
 
 // CONCATENATED MODULE: ./node_modules/is-nil-x/dist/is-nil-x.esm.js
@@ -1734,7 +1734,7 @@ var hasBoxed = boxedString[0] === has_boxed_string_x_esm_string && 0 in boxedStr
 
 
 // EXTERNAL MODULE: ./node_modules/is-string/index.js
-var is_string = __webpack_require__(3);
+var is_string = __webpack_require__(2);
 var is_string_default = /*#__PURE__*/__webpack_require__.n(is_string);
 
 // CONCATENATED MODULE: ./node_modules/split-if-boxed-bug-x/dist/split-if-boxed-bug-x.esm.js
@@ -2179,6 +2179,294 @@ var array_slice_x_esm_slice = function slice(array, start, end) {
 /* harmony default export */ var array_slice_x_esm = (array_slice_x_esm_slice);
 
 
+// CONCATENATED MODULE: ./node_modules/is-primitive-x/dist/is-primitive-x.esm.js
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/**
+ * Returns true if the value is a primitive.
+ *
+ * @param {*} [val] - The value to test.
+ * @returns {boolean} True if a primitive, otherwise false..
+ */
+var isPrimitive = function isPrimitive(val) {
+  return _typeof(val) === 'object' ? val === null : typeof val !== 'function';
+};
+
+/* harmony default export */ var is_primitive_x_esm = (isPrimitive);
+
+
+// CONCATENATED MODULE: ./node_modules/util-pusher-x/dist/util-pusher-x.esm.js
+
+
+var util_pusher_x_esm_EMPTY_STRING = '';
+var split = util_pusher_x_esm_EMPTY_STRING.split;
+var splitter = [util_pusher_x_esm_EMPTY_STRING];
+
+var util_pusher_x_esm_getIterable = function getIterable(arrayLike) {
+  // noinspection JSUnresolvedFunction
+  return is_string_default()(arrayLike) ? split.apply(arrayLike, splitter) : arrayLike;
+}; // eslint-disable jsdoc/no-undefined-types
+// noinspection JSCommentMatchesSignature
+
+/**
+ * This pushes or concatenates into a new or existing array.
+ *
+ * @param {Array} arrayLike - The source.
+ * @param {number} [from=0] - The from source index.
+ * @param {Array} [target=[]] - The target array.
+ * @returns {*} The target array.
+ */
+// eslint-enable jsdoc/no-undefined-types
+
+
+var util_pusher_x_esm_pusher = function pusher(arrayLike, from) {
+  /* eslint-disable-next-line prefer-rest-params */
+  var target = arguments.length > 2 ? arguments[2] : [];
+
+  if (typeof arrayLike !== 'string' && is_primitive_x_esm(arrayLike)) {
+    return target;
+  }
+
+  var iterable = util_pusher_x_esm_getIterable(arrayLike);
+  var length = iterable.length;
+
+  for (var i = from || 0; i < length; i += 1) {
+    target[target.length] = arrayLike[i];
+  }
+
+  return target;
+};
+
+/* harmony default export */ var util_pusher_x_esm = (util_pusher_x_esm_pusher);
+
+
+// CONCATENATED MODULE: ./node_modules/simple-bind-x/dist/simple-bind-x.esm.js
+function simple_bind_x_esm_slicedToArray(arr, i) { return simple_bind_x_esm_arrayWithHoles(arr) || simple_bind_x_esm_iterableToArrayLimit(arr, i) || simple_bind_x_esm_nonIterableRest(); }
+
+function simple_bind_x_esm_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function simple_bind_x_esm_iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function simple_bind_x_esm_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+var simple_bind_x_esm_ERROR_MESSAGE = 'bind called on incompatible ';
+var simple_bind_x_esm_object = {};
+var ObjectCtr = simple_bind_x_esm_object.constructor;
+var simple_bind_x_esm_toStringTag = simple_bind_x_esm_object.toString;
+var funcType = '[object Function]';
+var simple_bind_x_esm_ZERO = 0;
+var argsOffset = 2;
+
+var simple_bind_x_esm_getMax = function getMax(a, b) {
+  return a >= b ? a : b;
+};
+
+var simple_bind_x_esm_assertIsFunction = function assertIsFunction(value) {
+  if (typeof value !== 'function' && simple_bind_x_esm_toStringTag.apply(value) !== funcType) {
+    throw new TypeError(simple_bind_x_esm_ERROR_MESSAGE + value);
+  }
+};
+
+var boundFns = [function zero(binder) {
+  return function boundFn() {
+    /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+    return binder.apply(this, util_pusher_x_esm(arguments));
+  };
+}, function one(binder, boundLength) {
+  return function boundFn(a) {
+    /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a]));
+  };
+}, function two(binder, boundLength) {
+  return function boundFn(a, b) {
+    /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b]));
+  };
+}, function three(binder, boundLength) {
+  /* eslint-disable-next-line max-params */
+  return function boundFn(a, b, c) {
+    /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c]));
+  };
+}, function four(binder, boundLength) {
+  /* eslint-disable-next-line max-params */
+  return function boundFn(a, b, c, d) {
+    /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d]));
+  };
+}, function five(binder, boundLength) {
+  /* eslint-disable-next-line max-params */
+  return function boundFn(a, b, c, d, e) {
+    /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d, e]));
+  };
+}, function six(binder, boundLength) {
+  /* eslint-disable-next-line max-params */
+  return function boundFn(a, b, c, d, e, f) {
+    /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d, e, f]));
+  };
+}, function seven(binder, boundLength) {
+  /* eslint-disable-next-line max-params */
+  return function boundFn(a, b, c, d, e, f, g) {
+    /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d, e, f, g]));
+  };
+}, function eight(binder, boundLength) {
+  /* eslint-disable-next-line max-params */
+  return function boundFn(a, b, c, d, e, f, g, h) {
+    /* eslint-disable-next-line babel/no-invalid-this,prefer-rest-params */
+    return binder.apply(this, util_pusher_x_esm(arguments, boundLength, [a, b, c, d, e, f, g, h]));
+  };
+}];
+
+var getBoundFn = function getBoundFn(args) {
+  var _args = simple_bind_x_esm_slicedToArray(args, 3),
+      binder = _args[0],
+      target = _args[1],
+      bindArgs = _args[2];
+
+  var boundLength = simple_bind_x_esm_getMax(simple_bind_x_esm_ZERO, target.length - simple_bind_x_esm_getMax(simple_bind_x_esm_ZERO, bindArgs.length - argsOffset));
+  var fn = boundFns[boundLength];
+  var boundFn = fn ? fn(binder, boundLength) : boundFns[simple_bind_x_esm_ZERO](binder);
+
+  if (target.prototype) {
+    /* eslint-disable-next-line lodash/prefer-noop */
+    var Empty = function Empty() {};
+
+    Empty.prototype = target.prototype;
+    boundFn.prototype = new Empty();
+    Empty.prototype = null;
+  }
+
+  return boundFn;
+};
+
+var getResult = function getResult(target, boundArgs) {
+  /* eslint-disable-next-line babel/no-invalid-this */
+  var result = target.apply(this, boundArgs);
+  /* eslint-disable-next-line babel/no-invalid-this,babel/new-cap */
+
+  return ObjectCtr(result) === result ? result : this;
+}; // eslint-disable jsdoc/check-param-names
+// noinspection JSCommentMatchesSignature
+
+/**
+ * The bind() method creates a new function that, when called, has its this
+ * keyword set to the provided value, with a given sequence of arguments
+ * preceding any provided when the new function is called.
+ *
+ * @param {Function} target - The target function.
+ * @param {*} [thisArg] - The value to be passed as the this parameter to the target
+ *  function when the bound function is called. The value is ignored if the
+ *  bound function is constructed using the new operator.
+ * @param {...*} [args] - Arguments to prepend to arguments provided to the bound
+ *  function when invoking the target function.
+ * @throws {TypeError} If target is not a function.
+ * @returns {Function} The bound function.
+ */
+// eslint-enable jsdoc/check-param-names
+
+
+var simple_bind_x_esm_bind = function bind(target, thisArg) {
+  simple_bind_x_esm_assertIsFunction(target);
+  /* eslint-disable-next-line prefer-rest-params */
+
+  var bindArgs = arguments;
+  var bound;
+
+  var binder = function binder() {
+    /* eslint-disable-next-line prefer-rest-params */
+    var boundArgs = util_pusher_x_esm(arguments, simple_bind_x_esm_ZERO, util_pusher_x_esm(bindArgs, argsOffset));
+    /* eslint-disable-next-line babel/no-invalid-this */
+
+    return this instanceof bound ? getResult.apply(this, [target, boundArgs]) : target.apply(thisArg, boundArgs);
+  };
+
+  bound = getBoundFn([binder, target, bindArgs]);
+  return bound;
+};
+
+/* harmony default export */ var simple_bind_x_esm = (simple_bind_x_esm_bind);
+
+
+// CONCATENATED MODULE: ./node_modules/simple-call-x/dist/simple-call-x.esm.js
+
+
+var $TypeError = TypeError;
+var nativeApply = simple_bind_x_esm.apply,
+    nativeCall = simple_bind_x_esm.call;
+var $apply = simple_bind_x_esm(nativeCall, nativeApply);
+var simple_call_x_esm_toStringTag = simple_bind_x_esm(nativeApply, {}.toString);
+var simple_call_x_esm_ERROR_MESSAGE = ' is not a function';
+var simple_call_x_esm_funcType = '[object Function]';
+
+var simple_call_x_esm_assertIsFunction = function assertIsFunction(value) {
+  if (typeof value !== 'function' && simple_call_x_esm_toStringTag(value) !== simple_call_x_esm_funcType) {
+    throw new $TypeError(value + simple_call_x_esm_ERROR_MESSAGE);
+  }
+
+  return value;
+}; // eslint-disable jsdoc/check-param-names
+// noinspection JSCommentMatchesSignature
+
+/**
+ * The abstract operation Call is used to call the [[Call]] internal method of a function object.
+ *
+ * @function call
+ * @param {Function} F - The target function.
+ * @param {*} [V] - The context.
+ * @param {Array} [args] - Argument to call the function with.
+ * @throws {TypeError} If target is not a function.
+ * @returns {*} The the result of invoking the function.
+ * @see https://www.ecma-international.org/ecma-262/6.0/#sec-call
+ */
+// eslint-enable jsdoc/check-param-names
+
+
+var simple_call_x_esm_call = function call(F, V) {
+  /* eslint-disable-next-line prefer-rest-params */
+  return $apply(simple_call_x_esm_assertIsFunction(F), V, util_pusher_x_esm(arguments[2]));
+};
+
+/* harmony default export */ var simple_call_x_esm = (simple_call_x_esm_call);
+
+
+// CONCATENATED MODULE: ./node_modules/simple-methodize-x/dist/simple-methodize-x.esm.js
+
+
+var simple_methodize_x_esm_toStringTag = {}.toString;
+var simple_methodize_x_esm_ERROR_MESSAGE = 'methodize called on incompatible ';
+var simple_methodize_x_esm_funcType = '[object Function]';
+
+var simple_methodize_x_esm_assertIsFunction = function assertIsFunction(value) {
+  if (typeof value !== 'function' && simple_call_x_esm(simple_methodize_x_esm_toStringTag, value) !== simple_methodize_x_esm_funcType) {
+    throw new TypeError(simple_methodize_x_esm_ERROR_MESSAGE + value);
+  }
+
+  return value;
+};
+/**
+ * Methodize a prototype method. Compliant to 8 arguments.
+ *
+ * @param {Function} prototypeMethod - The prototype method to methodize.
+ * @throws {TypeError} If target is not a function.
+ * @returns {Function} The static method.
+ */
+
+
+var simple_methodize_x_esm_methodize = function methodize(prototypeMethod) {
+  simple_methodize_x_esm_assertIsFunction(prototypeMethod);
+  return function methodized() {
+    /* eslint-disable-next-line prefer-rest-params */
+    return simple_call_x_esm(prototypeMethod, arguments[0], util_pusher_x_esm(arguments, 1));
+  };
+};
+
+/* harmony default export */ var simple_methodize_x_esm = (simple_methodize_x_esm_methodize);
+
+
 // CONCATENATED MODULE: ./dist/to-iso-string-x.esm.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "implementation", function() { return to_iso_string_x_esm_implementation; });
 function to_iso_string_x_esm_slicedToArray(arr, i) { return to_iso_string_x_esm_arrayWithHoles(arr) || to_iso_string_x_esm_iterableToArrayLimit(arr, i) || to_iso_string_x_esm_nonIterableRest(); }
@@ -2195,39 +2483,43 @@ function to_iso_string_x_esm_arrayWithHoles(arr) { if (Array.isArray(arr)) retur
 
 
 
+
 /* eslint-disable-next-line no-restricted-globals */
 
 var globalIsFinite = isFinite;
 var to_iso_string_x_esm_abs = Math.abs;
-var _Date$prototype = Date.prototype,
-    ntis = _Date$prototype.toISOString,
-    getTime = _Date$prototype.getTime,
-    getUTCFullYear = _Date$prototype.getUTCFullYear,
-    getUTCMonth = _Date$prototype.getUTCMonth,
-    getUTCDate = _Date$prototype.getUTCDate,
-    getUTCHours = _Date$prototype.getUTCHours,
-    getUTCMinutes = _Date$prototype.getUTCMinutes,
-    getUTCSeconds = _Date$prototype.getUTCSeconds,
-    getUTCMilliseconds = _Date$prototype.getUTCMilliseconds;
-var nativeToISOString = typeof ntis === 'function' && ntis;
-var join = [].join;
+var $Date = Date;
+var datePrototype = $Date.prototype;
+var getTime = simple_methodize_x_esm(datePrototype.getTime);
+var getUTCFullYear = simple_methodize_x_esm(datePrototype.getUTCFullYear);
+var getUTCMonth = simple_methodize_x_esm(datePrototype.getUTCMonth);
+var getUTCDate = simple_methodize_x_esm(datePrototype.getUTCDate);
+var getUTCHours = simple_methodize_x_esm(datePrototype.getUTCHours);
+var getUTCMinutes = simple_methodize_x_esm(datePrototype.getUTCMinutes);
+var getUTCSeconds = simple_methodize_x_esm(datePrototype.getUTCSeconds);
+var getUTCMilliseconds = simple_methodize_x_esm(datePrototype.getUTCMilliseconds);
+var ntis = datePrototype.toISOString;
+var methodizedToISOString = typeof ntis === 'function' && simple_methodize_x_esm(ntis);
+var join = simple_methodize_x_esm([].join);
+var to_iso_string_x_esm_EMPTY_STRING = '';
+var indexOf = simple_methodize_x_esm(to_iso_string_x_esm_EMPTY_STRING.indexOf);
 
 var to_iso_string_x_esm_test1 = function test1() {
-  var res = attempt_x_esm.call(new Date(0), nativeToISOString);
+  var res = attempt_x_esm(methodizedToISOString, new $Date(0));
   return res.threw === false && res.value === '1970-01-01T00:00:00.000Z';
 };
 
 var to_iso_string_x_esm_test2 = function test2() {
-  var res = attempt_x_esm.call(new Date(-62198755200000), nativeToISOString);
-  return res.threw === false && res.value.indexOf('-000001') > -1;
+  var res = attempt_x_esm(methodizedToISOString, new $Date(-62198755200000));
+  return res.threw === false && indexOf(res.value, '-000001') > -1;
 };
 
 var to_iso_string_x_esm_test3 = function test3() {
-  var res = attempt_x_esm.call(new Date(-1), nativeToISOString);
+  var res = attempt_x_esm(methodizedToISOString, new $Date(-1));
   return res.threw === false && res.value === '1969-12-31T23:59:59.999Z';
 };
 
-var to_iso_string_x_esm_isWorking = to_boolean_x_esm(nativeToISOString) && to_iso_string_x_esm_test1() && to_iso_string_x_esm_test2() && to_iso_string_x_esm_test3();
+var to_iso_string_x_esm_isWorking = to_boolean_x_esm(methodizedToISOString) && to_iso_string_x_esm_test1() && to_iso_string_x_esm_test2() && to_iso_string_x_esm_test3();
 
 var to_iso_string_x_esm_assertIsDate = function assertIsDate(date) {
   if (is_date_object_default()(date) === false) {
@@ -2238,7 +2530,7 @@ var to_iso_string_x_esm_assertIsDate = function assertIsDate(date) {
 };
 
 var assertAdobe = function assertAdobe(date) {
-  if (globalIsFinite(date) === false || globalIsFinite(getTime.call(date)) === false) {
+  if (globalIsFinite(date) === false || globalIsFinite(getTime(date)) === false) {
     // Adobe Photoshop requires the second check.
     throw new RangeError('toISOString called on non-finite value.');
   }
@@ -2253,22 +2545,22 @@ var to_iso_string_x_esm_stringify = function stringify(args) {
       year = _args[2]; // the date time string format is specified in 15.9.1.15.
 
 
-  var parts = [month + 1, getUTCDate.call(date), getUTCHours.call(date), getUTCMinutes.call(date), getUTCSeconds.call(date)];
+  var parts = [month + 1, getUTCDate(date), getUTCHours(date), getUTCMinutes(date), getUTCSeconds(date)];
   var result = array_map_x_esm(parts, function iteratee(item) {
     // pad months, days, hours, minutes, and seconds to have two digits.
     return string_pad_start_x_esm(item, 2, '0');
   });
-  var dateStr = "".concat(year, "-").concat(join.call(array_slice_x_esm(result, 0, 2), '-')); // pad milliseconds to have three digits.
+  var dateStr = "".concat(year, "-").concat(join(array_slice_x_esm(result, 0, 2), '-')); // pad milliseconds to have three digits.
 
-  var msStr = string_pad_start_x_esm(getUTCMilliseconds.call(date), 3, '0');
-  var timeStr = "".concat(join.call(array_slice_x_esm(result, 2), ':'), ".").concat(msStr);
+  var msStr = string_pad_start_x_esm(getUTCMilliseconds(date), 3, '0');
+  var timeStr = "".concat(join(array_slice_x_esm(result, 2), ':'), ".").concat(msStr);
   return "".concat(dateStr, "T").concat(timeStr, "Z");
 };
 
 var patchedToIsoString = function toISOString(date) {
   to_iso_string_x_esm_assertIsDate(date);
   assertAdobe(date);
-  return nativeToISOString.call(date);
+  return methodizedToISOString(date);
 };
 
 var getSign = function getSign(year) {
@@ -2280,14 +2572,14 @@ var getSign = function getSign(year) {
     return '+';
   }
 
-  return '';
+  return to_iso_string_x_esm_EMPTY_STRING;
 };
 
 var to_iso_string_x_esm_implementation = function toISOString(date) {
   to_iso_string_x_esm_assertIsDate(date);
   assertAdobe(date);
-  var year = getUTCFullYear.call(date);
-  var month = getUTCMonth.call(date); // see https://github.com/es-shims/es5-shim/issues/111
+  var year = getUTCFullYear(date);
+  var month = getUTCMonth(date); // see https://github.com/es-shims/es5-shim/issues/111
 
   /* eslint-disable-next-line no-bitwise */
 
@@ -2304,8 +2596,8 @@ var to_iso_string_x_esm_implementation = function toISOString(date) {
  * ±YYYYYY-MM-DDTHH:mm:ss.sssZ, respectively). The timezone is always zero UTC
  * offset, as denoted by the suffix "Z".
  *
- * @param {object} date - A Date object.
- * @throws {TypeError} If date is not a Date object.
+ * @param {object} date - A $Date object.
+ * @throws {TypeError} If date is not a $Date object.
  * @throws {RangeError} If date is invalid.
  * @returns {string} Given date in the ISO 8601 format according to universal time.
  */
