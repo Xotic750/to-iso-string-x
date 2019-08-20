@@ -1,6 +1,6 @@
 {
   "name": "to-iso-string-x",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Cross-browser toISOString support.",
   "homepage": "https://github.com/Xotic750/to-iso-string-x",
   "author": {
@@ -51,12 +51,12 @@
     "url": "https://github.com/Xotic750/to-iso-string-x/issues"
   },
   "dependencies": {
-    "array-map-x": "^3.1.0",
-    "array-slice-x": "^4.2.0",
-    "attempt-x": "^2.1.0",
+    "array-map-x": "^3.1.1",
+    "array-slice-x": "^4.2.1",
+    "attempt-x": "^2.1.1",
     "is-date-object": "^1.0.1",
-    "simple-methodize-x": "^1.0.2",
-    "string-pad-start-x": "^2.1.0",
+    "simple-methodize-x": "^1.0.3",
+    "string-pad-start-x": "^2.1.1",
     "to-boolean-x": "^2.1.0"
   },
   "devDependencies": {
