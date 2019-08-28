@@ -2,7 +2,7 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2017",
-  "date": "2019-08-27T21:18:04.448Z",
+  "date": "2019-08-28T16:03:06.839Z",
   "describe": "",
   "description": "Cross-browser toISOString support.",
   "file": "to-iso-string-x.js",
